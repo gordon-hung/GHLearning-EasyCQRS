@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GHLearning.EasyCQRS.SharedKernel;
+﻿using GHLearning.EasyCQRS.SharedKernel;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace GHLearning.EasyCQRS.Infrastructure.Entities.Models;
-public record User
+public record UserEntity
 {
 	/// <summary>
 	/// Gets or sets the code.
@@ -53,7 +48,6 @@ public record User
 	/// The created at.
 	/// </value>
 	[BsonElement("created_at")]
-	[BsonIgnoreIfNull]
 	public DateTime CreatedAt { get; set; }
 	/// <summary>
 	/// Gets or sets the updated at.
@@ -62,7 +56,6 @@ public record User
 	/// The updated at.
 	/// </value>
 	[BsonElement("updated_at")]
-	[BsonIgnoreIfNull]
 	public DateTime UpdatedAt { get; set; }
 	/// <summary>
 	/// Gets or sets the registered at.
@@ -71,7 +64,6 @@ public record User
 	/// The registered at.
 	/// </value>
 	[BsonElement("registered_at")]
-	[BsonIgnoreIfNull]
 	public DateTime? RegisteredAt { get; set; }
 	/// <summary>
 	/// Gets or sets the deleted at.
@@ -80,6 +72,5 @@ public record User
 	/// The deleted at.
 	/// </value>
 	[BsonElement("deleted_at")]
-	[BsonIgnoreIfNull]
 	public DateTime? DeletedAt { get; set; }
 }

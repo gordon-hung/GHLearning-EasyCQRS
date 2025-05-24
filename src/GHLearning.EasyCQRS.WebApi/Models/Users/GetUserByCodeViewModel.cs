@@ -1,10 +1,10 @@
 ﻿using GHLearning.EasyCQRS.SharedKernel;
 
-namespace GHLearning.EasyCQRS.Core.Users.Models;
-public record UserInfo(
+namespace GHLearning.EasyCQRS.WebApi.Models.Users;
+
+public record GetUserByCodeViewModel(
 	string Code,
 	string Username,
-	string Password,
 	UserStatus Status,
 	DateTimeOffset CreatedAt,
 	DateTimeOffset UpdatedAt,

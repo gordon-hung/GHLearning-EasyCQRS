@@ -1,6 +1,4 @@
-﻿using GHLearning.EasyCQRS.Application.Abstractions.Messaging;
-
-namespace GHLearning.EasyCQRS.Application.Abstractions.Messaging;
+﻿namespace GHLearning.EasyCQRS.Application.Abstractions.Messaging;
 
 public interface ICommandHandler<in TCommand> where TCommand : ICommand
 {

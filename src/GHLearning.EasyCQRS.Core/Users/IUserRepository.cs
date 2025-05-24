@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GHLearning.EasyCQRS.Core.Users.Models;
+﻿using GHLearning.EasyCQRS.Core.Users.Models;
 
 namespace GHLearning.EasyCQRS.Core.Users;
 

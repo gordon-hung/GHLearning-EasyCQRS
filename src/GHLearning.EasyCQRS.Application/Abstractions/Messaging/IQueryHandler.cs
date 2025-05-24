@@ -1,6 +1,4 @@
-﻿using GHLearning.EasyCQRS.Application.Abstractions.Messaging;
-
-namespace GHLearning.EasyCQRS.Application.Abstractions.Messaging;
+﻿namespace GHLearning.EasyCQRS.Application.Abstractions.Messaging;
 
 public interface IQueryHandler<in TQuery, TResponse> where TQuery : IQuery<TResponse>
 {

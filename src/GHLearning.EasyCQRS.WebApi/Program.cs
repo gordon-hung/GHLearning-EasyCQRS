@@ -1,21 +1,62 @@
-using GHLearning.EasyCQRS.Application;
+﻿using System.Net.Mime;
+using System.Text.Json.Serialization;
+using CorrelationId;
+using GHLearning.EasyCQRS.Application.DependencyInjection;
+using GHLearning.EasyCQRS.Infrastructure.DependencyInjection;
+using GHLearning.EasyCQRS.SharedKernel;
+using GHLearning.EasyCQRS.WebApi.Middlewares;
+using Microsoft.AspNetCore.HttpLogging;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using OpenTelemetry.Exporter;
 using OpenTelemetry;
+using OpenTelemetry.Exporter;
+using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Scalar.AspNetCore;
-using OpenTelemetry.Metrics;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services
+	.AddRouting(options => options.LowercaseUrls = true)
+	.AddControllers(options =>
+	{
+		options.Filters.Add(new ProducesAttribute(MediaTypeNames.Application.Json));
+		options.Filters.Add(new ConsumesAttribute(MediaTypeNames.Application.Json));
+	})
+	.AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
-builder.Services.AddControllers();
+builder.Services.AddInfrastructure((sp, options) =>
+{
+	// Learn more about configuring DbContext at https://aka.ms/efcore-docs
+	options.UseMongoDB(
+		connectionString: builder.Configuration.GetConnectionString("MongoDb")!,
+		databaseName: "easy");
+})
+	.AddApplication();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-builder.Services.AddApplication();
+//Learn more about configuring HttpLogging at https://learn.microsoft.com/en-us/aspnet/core/fundamentals/http-logging/?view=aspnetcore-8.0
+builder.Services.AddHttpLogging(logging =>
+{
+	logging.LoggingFields = HttpLoggingFields.All;
+	logging.RequestHeaders.Add(CorrelationIdOptions.DefaultHeader);
+	logging.ResponseHeaders.Add(CorrelationIdOptions.DefaultHeader);
+	logging.RequestHeaders.Add(TraceHeaders.TraceParent);
+	logging.ResponseHeaders.Add(TraceHeaders.TraceParent);
+	logging.RequestHeaders.Add(TraceHeaders.TraceId);
+	logging.ResponseHeaders.Add(TraceHeaders.TraceId);
+	logging.RequestHeaders.Add(TraceHeaders.ParentId);
+	logging.ResponseHeaders.Add(TraceHeaders.ParentId);
+	logging.RequestHeaders.Add(TraceHeaders.TraceFlag);
+	logging.ResponseHeaders.Add(TraceHeaders.TraceFlag);
+	logging.RequestBodyLogLimit = 4096;
+	logging.ResponseBodyLogLimit = 4096;
+	logging.CombineLogs = true;
+});
 
 //Learn more about configuring OpenTelemetry at https://learn.microsoft.com/zh-tw/dotnet/core/diagnostics/observability-with-otel
 builder.Services.AddOpenTelemetry()
@@ -64,6 +105,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCorrelationId();
+
+app.UseMiddleware<TraceMiddleware>();
+
+app.UseMiddleware<CorrelationMiddleware>();
+
+app.UseHttpLogging();
 app.UseAuthorization();
 
 app.MapControllers();

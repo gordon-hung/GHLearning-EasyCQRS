@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTelemetry.Trace;
-using GHLearning.EasyCQRS.Application.Abstractions.Tracing;
+﻿using OpenTelemetry.Trace;
 using GHLearning.EasyCQRS.Application.Abstractions.Messaging;
 
 namespace GHLearning.EasyCQRS.Application.Abstractions.Tracing;
