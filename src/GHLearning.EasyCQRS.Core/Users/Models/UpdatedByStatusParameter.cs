@@ -1,5 +1,5 @@
 ﻿namespace GHLearning.EasyCQRS.Core.Users.Models;
-public record UpdatedByPassword(
+public record UpdatedByStatusParameter(
 	string Code,
-	string Password,
+	UserStatus Status,
 	DateTimeOffset OperationAt);

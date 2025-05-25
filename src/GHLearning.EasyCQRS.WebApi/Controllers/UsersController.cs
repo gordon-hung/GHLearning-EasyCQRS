@@ -1,14 +1,13 @@
 ﻿using GHLearning.EasyCQRS.Application.Abstractions.Messaging;
 using GHLearning.EasyCQRS.Application.Users.Create;
-using GHLearning.EasyCQRS.Application.Users.GetByCode;
 using GHLearning.EasyCQRS.Application.Users.GetByUsername;
-using GHLearning.EasyCQRS.SharedKernel;
+using GHLearning.EasyCQRS.Application.Users.UpdateByPassword;
+using GHLearning.EasyCQRS.Application.Users.UpdateByStatusDelete;
 using GHLearning.EasyCQRS.WebApi.Models.Users;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using OpenTelemetry.Trace;
 
 namespace GHLearning.EasyCQRS.WebApi.Controllers;
+
 [Route("api/[controller]")]
 [ApiController]
 public class UsersController : ControllerBase
@@ -16,7 +15,7 @@ public class UsersController : ControllerBase
 	[HttpPost]
 	public Task<CreateUserViewModel> CreateUserAsync(
 		[FromServices] ICommandHandler<CreateUserCommand, CreateUserResponse> command,
-		[FromBody] CreateUserRrequest request)
+		[FromBody] CreateUserRequest request)
 	{
 		if (request is null)
 		{
@@ -31,27 +30,8 @@ public class UsersController : ControllerBase
 			.ContinueWith(task => new CreateUserViewModel(task.Result.Code), HttpContext.RequestAborted);
 	}
 
-	[HttpGet("{code}/Code/Info")]
-	public async Task<GetUserByCodeViewModel?> GetUserByCodeAsync(
-	[FromServices] IQueryHandler<GetUserByCodeQuery, GetUserByCodeResponse?> query,
-	string code)
-	{
-		var user = await query.Handle(
-			query: new GetUserByCodeQuery(code),
-			cancellationToken: HttpContext.RequestAborted)
-			.ConfigureAwait(false);
-
-		return user is null ? null : new GetUserByCodeViewModel(
-			Code: user.Code,
-			Username: user.Username,
-			Status: user.Status,
-			CreatedAt: user.CreatedAt,
-			UpdatedAt: user.UpdatedAt,
-			RegisteredAt: user.RegisteredAt);
-	}
-
-	[HttpGet("{username}/Username/Info")]
-	public async Task<GetUserByUsernameViewModel?> GetUserByCodeAsync(
+	[HttpGet("{username}")]
+	public async Task<GetUserByUsernameViewModel?> GetUserByUsernameAsync(
 	[FromServices] IQueryHandler<GetUserByUsernameQuery, GetUserByUsernameResponse?> query,
 	string username)
 	{
@@ -68,4 +48,24 @@ public class UsersController : ControllerBase
 			UpdatedAt: user.UpdatedAt,
 			RegisteredAt: user.RegisteredAt);
 	}
+
+	[HttpDelete("{username}")]
+	public Task UpdateUserByStatusDeleteAsync(
+		[FromServices] ICommandHandler<UpdateUserByStatusDeleteCommand> command,
+		string username)
+		=> command.Handle(
+			command: new UpdateUserByStatusDeleteCommand(
+				Username: username),
+			cancellationToken: HttpContext.RequestAborted);
+
+	[HttpPatch("{username}/Password")]
+	public Task UpdateUserByPasswordAsync(
+		[FromServices] ICommandHandler<UpdateUserByPasswordCommand> command,
+		string username,
+		[FromBody] UpdateUserByPasswordRequest request)
+		=> command.Handle(
+			command: new UpdateUserByPasswordCommand(
+				Username: username,
+				Password: request.Password),
+			cancellationToken: HttpContext.RequestAborted);
 }

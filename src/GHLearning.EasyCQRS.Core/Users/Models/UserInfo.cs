@@ -1,6 +1,4 @@
-﻿using GHLearning.EasyCQRS.SharedKernel;
-
-namespace GHLearning.EasyCQRS.Core.Users.Models;
+﻿namespace GHLearning.EasyCQRS.Core.Users.Models;
 public record UserInfo(
 	string Code,
 	string Username,

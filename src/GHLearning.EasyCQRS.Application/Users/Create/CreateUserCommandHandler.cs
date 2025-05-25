@@ -6,6 +6,7 @@ using GHLearning.EasyCQRS.SharedKernel;
 using Microsoft.Extensions.Logging;
 
 namespace GHLearning.EasyCQRS.Application.Users.Create;
+
 internal class CreateUserCommandHandler(
 	ILogger<CreateUserCommandHandler> logger,
 	TimeProvider timeProvider,
@@ -31,9 +32,21 @@ internal class CreateUserCommandHandler(
 		using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
 		try
 		{
-			var parameter = new CreatedParameter(code, username, password, operationAt);
+			await userRepository.CreateAsync(
+				parameter: new CreatedParameter(
+					Code: code,
+					Username: username,
+					Password: password,
+					OperationAt: operationAt),
+				cancellationToken: cancellationToken)
+				.ConfigureAwait(false);
 
-			await userRepository.CreateAsync(parameter, cancellationToken).ConfigureAwait(false);
+			await userRepository.UpdateByRegisterAsync(
+				parameter: new UpdateByRegisterParameter(
+					Code: code,
+					OperationAt: timeProvider.GetUtcNow()),
+				cancellationToken: cancellationToken)
+				.ConfigureAwait(false);
 
 			scope.Complete();
 

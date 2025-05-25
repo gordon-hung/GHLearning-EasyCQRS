@@ -1,6 +1,7 @@
 ﻿using GHLearning.EasyCQRS.SharedKernel;
 
 namespace GHLearning.EasyCQRS.Infrastructure;
+
 internal class UserCodeGenerator(
 	TimeProvider timeProvider) : IUserCodeGenerator
 {

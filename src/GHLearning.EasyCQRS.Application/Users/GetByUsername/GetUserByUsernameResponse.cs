@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GHLearning.EasyCQRS.Core.Users;
 using GHLearning.EasyCQRS.SharedKernel;
 
 namespace GHLearning.EasyCQRS.Application.Users.GetByUsername;

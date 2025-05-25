@@ -1,5 +1,5 @@
 ﻿namespace GHLearning.EasyCQRS.WebApi.Models.Users;
 
-public record CreateUserRrequest(
+public record CreateUserRequest(
 	string Username,
 	string Password);

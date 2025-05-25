@@ -2,7 +2,6 @@
 using GHLearning.EasyCQRS.Core.Users.Models;
 using GHLearning.EasyCQRS.Infrastructure.Entities;
 using GHLearning.EasyCQRS.Infrastructure.Entities.Models;
-using GHLearning.EasyCQRS.SharedKernel;
 using Microsoft.EntityFrameworkCore;
 
 namespace GHLearning.EasyCQRS.Infrastructure;
@@ -17,10 +16,10 @@ internal class UserRepository(
 			Code = parameter.Code,
 			Username = parameter.Username,
 			Password = parameter.Password,
-			Status = UserStatus.Active,
+			Status = UserStatus.Register,
 			CreatedAt = parameter.OperationAt.UtcDateTime,
 			UpdatedAt = parameter.OperationAt.UtcDateTime,
-			RegisteredAt = parameter.OperationAt.UtcDateTime,
+			RegisteredAt = null,
 			DeletedAt = null
 		};
 
@@ -30,7 +29,6 @@ internal class UserRepository(
 
 	public Task<bool> ExistsAsync(string code, CancellationToken cancellationToken = default)
 		=> context.Users.AnyAsync(u => u.Code == code, cancellationToken);
-
 
 	public Task<bool> ExistsByUsernameAsync(string username, CancellationToken cancellationToken = default)
 		=> context.Users.AnyAsync(u => u.Username == username.ToLower(), cancellationToken);
@@ -73,7 +71,7 @@ internal class UserRepository(
 				DeletedAt: user.DeletedAt);
 	}
 
-	public async Task UpdateByPasswordAsync(UpdatedByPassword parameter, CancellationToken cancellationToken = default)
+	public async Task UpdateByPasswordAsync(UpdatedByPasswordParameter parameter, CancellationToken cancellationToken = default)
 	{
 		var entity = await context.Users.FirstOrDefaultAsync(u => u.Code == parameter.Code, cancellationToken).ConfigureAwait(false)
 			?? throw new InvalidOperationException($"User with code {parameter.Code} not found.");
@@ -86,7 +84,21 @@ internal class UserRepository(
 		await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 	}
 
-	public async Task UpdateByStatusAsync(UpdatedByStatus parameter, CancellationToken cancellationToken = default)
+	public async Task UpdateByRegisterAsync(UpdateByRegisterParameter parameter, CancellationToken cancellationToken = default)
+	{
+		var entity = await context.Users.FirstOrDefaultAsync(u => u.Code == parameter.Code, cancellationToken).ConfigureAwait(false)
+			?? throw new InvalidOperationException($"User with code {parameter.Code} not found.");
+
+		entity.Status = UserStatus.Active;
+		entity.RegisteredAt = parameter.OperationAt.UtcDateTime;
+		entity.UpdatedAt = parameter.OperationAt.UtcDateTime;
+
+		context.Users.Update(entity);
+
+		await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+	}
+
+	public async Task UpdateByStatusAsync(UpdatedByStatusParameter parameter, CancellationToken cancellationToken = default)
 	{
 		var entity = await context.Users.FirstOrDefaultAsync(u => u.Code == parameter.Code, cancellationToken).ConfigureAwait(false)
 			?? throw new InvalidOperationException($"User with code {parameter.Code} not found.");

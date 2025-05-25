@@ -1,6 +1,7 @@
 ﻿using GHLearning.EasyCQRS.SharedKernel;
 
 namespace GHLearning.EasyCQRS.Infrastructure;
+
 internal class PasswordHasher : IPasswordHasher
 {
 	private const int saltRounds = 10;

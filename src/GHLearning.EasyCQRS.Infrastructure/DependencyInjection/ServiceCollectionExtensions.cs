@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace GHLearning.EasyCQRS.Infrastructure.DependencyInjection;
+
 public static class ServiceCollectionExtensions
 {
 	public static IServiceCollection AddInfrastructure(

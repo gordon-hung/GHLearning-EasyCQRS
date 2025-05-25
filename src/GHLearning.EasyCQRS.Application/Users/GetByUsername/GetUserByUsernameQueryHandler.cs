@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GHLearning.EasyCQRS.Application.Abstractions.Messaging;
-using GHLearning.EasyCQRS.Application.Users.GetByCode;
+﻿using GHLearning.EasyCQRS.Application.Abstractions.Messaging;
 using GHLearning.EasyCQRS.Core.Users;
 
 namespace GHLearning.EasyCQRS.Application.Users.GetByUsername;
+
 internal class GetUserByUsernameQueryHandler(
 	IUserRepository userRepository) : IQueryHandler<GetUserByUsernameQuery, GetUserByUsernameResponse?>
 {

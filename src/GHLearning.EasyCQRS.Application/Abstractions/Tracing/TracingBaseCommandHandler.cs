@@ -1,5 +1,6 @@
-﻿using OpenTelemetry.Trace;
-using GHLearning.EasyCQRS.Application.Abstractions.Messaging;
+﻿using GHLearning.EasyCQRS.Application.Abstractions.Messaging;
+
+using OpenTelemetry.Trace;
 
 namespace GHLearning.EasyCQRS.Application.Abstractions.Tracing;
 

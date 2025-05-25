@@ -4,7 +4,6 @@ using CorrelationId.Abstractions;
 
 namespace GHLearning.EasyCQRS.WebApi.Middlewares;
 
-
 public class CorrelationMiddleware(ICorrelationIdProvider correlationIdProvider, RequestDelegate next)
 {
 	private readonly RequestDelegate _next = next;

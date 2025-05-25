@@ -1,8 +1,8 @@
-﻿using OpenTelemetry.Trace;
-using GHLearning.EasyCQRS.Application.Abstractions.Messaging;
+﻿using GHLearning.EasyCQRS.Application.Abstractions.Messaging;
+
+using OpenTelemetry.Trace;
 
 namespace GHLearning.EasyCQRS.Application.Abstractions.Tracing;
-
 
 internal sealed class TracingCommandHandler<TCommand, TResponse> : ICommandHandler<TCommand, TResponse>
 	where TCommand : ICommand<TResponse>

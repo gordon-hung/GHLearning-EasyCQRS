@@ -1,4 +1,4 @@
-﻿using GHLearning.EasyCQRS.SharedKernel;
+﻿using GHLearning.EasyCQRS.Core.Users;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
