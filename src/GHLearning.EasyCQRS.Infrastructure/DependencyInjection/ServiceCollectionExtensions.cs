@@ -1,7 +1,6 @@
 ﻿using CorrelationId;
 using CorrelationId.DependencyInjection;
 using GHLearning.EasyCQRS.Core.Users;
-using GHLearning.EasyCQRS.Infrastructure.Correlations;
 using GHLearning.EasyCQRS.Infrastructure.Entities;
 using GHLearning.EasyCQRS.SharedKernel;
 using Microsoft.EntityFrameworkCore;

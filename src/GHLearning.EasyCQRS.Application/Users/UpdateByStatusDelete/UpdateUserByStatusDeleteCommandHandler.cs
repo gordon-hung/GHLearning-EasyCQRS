@@ -27,10 +27,9 @@ internal class UpdateUserByStatusDeleteCommandHandler(
 
 		var operationAt = timeProvider.GetUtcNow();
 
-		await userRepository.UpdateByStatusAsync(
-			parameter: new UpdatedByStatusParameter(
+		await userRepository.DeleteAsync(
+			parameter: new DeleteParameter(
 				Code: user.Code,
-				Status: UserStatus.Deleted,
 				OperationAt: operationAt),
 			cancellationToken: cancellationToken)
 			.ConfigureAwait(false);

@@ -3,7 +3,7 @@
 using CorrelationId.Abstractions;
 using Microsoft.AspNetCore.Http;
 
-namespace GHLearning.EasyCQRS.Infrastructure.Correlations;
+namespace GHLearning.EasyCQRS.Infrastructure;
 
 internal sealed class CustomCorrelationIdProvider() : ICorrelationIdProvider
 {

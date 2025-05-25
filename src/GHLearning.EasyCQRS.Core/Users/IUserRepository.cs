@@ -19,4 +19,6 @@ public interface IUserRepository
 	Task UpdateByStatusAsync(UpdatedByStatusParameter parameter, CancellationToken cancellationToken = default);
 
 	Task UpdateByRegisterAsync(UpdateByRegisterParameter parameter, CancellationToken cancellationToken = default);
+
+	Task DeleteAsync(DeleteParameter parameter, CancellationToken cancellationToken = default);
 }

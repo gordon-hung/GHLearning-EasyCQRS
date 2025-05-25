@@ -14,7 +14,7 @@ internal class UserRepository(
 		var entity = new UserEntity
 		{
 			Code = parameter.Code,
-			Username = parameter.Username,
+			Username = parameter.Username.ToLower(),
 			Password = parameter.Password,
 			Status = UserStatus.Register,
 			CreatedAt = parameter.OperationAt.UtcDateTime,
@@ -27,6 +27,18 @@ internal class UserRepository(
 		await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 	}
 
+	public async Task DeleteAsync(DeleteParameter parameter, CancellationToken cancellationToken = default)
+	{
+		var entity = await context.Users.FirstOrDefaultAsync(u => u.Code == parameter.Code, cancellationToken).ConfigureAwait(false)
+			?? throw new InvalidOperationException($"User with code {parameter.Code} not found.");
+
+		entity.Status = UserStatus.Deleted;
+		entity.DeletedAt = parameter.OperationAt.UtcDateTime;
+		entity.UpdatedAt = parameter.OperationAt.UtcDateTime;
+
+		context.Users.Update(entity);
+		await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+	}
 	public Task<bool> ExistsAsync(string code, CancellationToken cancellationToken = default)
 		=> context.Users.AnyAsync(u => u.Code == code, cancellationToken);
 

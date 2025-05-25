@@ -1,4 +1,5 @@
-﻿using GHLearning.EasyCQRS.Core.Users;
+﻿using System.ComponentModel.DataAnnotations;
+using GHLearning.EasyCQRS.Core.Users;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -11,6 +12,7 @@ public record UserEntity
 	/// <value>
 	/// The code.
 	/// </value>
+	[Key]
 	[BsonId]
 	[BsonRepresentation(BsonType.String)]
 	public string Code { get; set; } = default!;
