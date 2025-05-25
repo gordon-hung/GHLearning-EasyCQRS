@@ -1,6 +1,7 @@
 ﻿using GHLearning.EasyCQRS.Application.Abstractions.Messaging;
 using GHLearning.EasyCQRS.Application.Users.Create;
 using GHLearning.EasyCQRS.Application.Users.GetByCode;
+using GHLearning.EasyCQRS.Application.Users.GetByUsername;
 using GHLearning.EasyCQRS.SharedKernel;
 using GHLearning.EasyCQRS.WebApi.Models.Users;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -46,8 +47,25 @@ public class UsersController : ControllerBase
 			Status: user.Status,
 			CreatedAt: user.CreatedAt,
 			UpdatedAt: user.UpdatedAt,
-			RegisteredAt: user.RegisteredAt,
-			DeletedAt: user.DeletedAt);
+			RegisteredAt: user.RegisteredAt);
+	}
 
+	[HttpGet("{username}/Username/Info")]
+	public async Task<GetUserByUsernameViewModel?> GetUserByCodeAsync(
+	[FromServices] IQueryHandler<GetUserByUsernameQuery, GetUserByUsernameResponse?> query,
+	string username)
+	{
+		var user = await query.Handle(
+			query: new GetUserByUsernameQuery(username),
+			cancellationToken: HttpContext.RequestAborted)
+			.ConfigureAwait(false);
+
+		return user is null ? null : new GetUserByUsernameViewModel(
+			Code: user.Code,
+			Username: user.Username,
+			Status: user.Status,
+			CreatedAt: user.CreatedAt,
+			UpdatedAt: user.UpdatedAt,
+			RegisteredAt: user.RegisteredAt);
 	}
 }

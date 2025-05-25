@@ -9,8 +9,6 @@ internal class GetUserByCodeQueryHandler(
 	{
 		var userInfo = await userRepository.GetByCodeAsync(query.Code, cancellationToken).ConfigureAwait(false);
 
-
-
 		return userInfo == null
 			? null
 			: new GetUserByCodeResponse(
@@ -19,7 +17,6 @@ internal class GetUserByCodeQueryHandler(
 				Status: userInfo.Status,
 				CreatedAt: userInfo.CreatedAt,
 				UpdatedAt: userInfo.UpdatedAt,
-				RegisteredAt: userInfo.RegisteredAt,
-				DeletedAt: userInfo.DeletedAt);
+				RegisteredAt: userInfo.RegisteredAt);
 	}
 }

@@ -7,5 +7,4 @@ public record GetUserByCodeResponse(
 	UserStatus Status,
 	DateTimeOffset CreatedAt,
 	DateTimeOffset UpdatedAt,
-	DateTimeOffset? RegisteredAt,
-	DateTimeOffset? DeletedAt);
+	DateTimeOffset? RegisteredAt);

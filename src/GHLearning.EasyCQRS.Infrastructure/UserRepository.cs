@@ -33,7 +33,7 @@ internal class UserRepository(
 
 
 	public Task<bool> ExistsByUsernameAsync(string username, CancellationToken cancellationToken = default)
-		=> context.Users.AnyAsync(u => u.Username == username, cancellationToken);
+		=> context.Users.AnyAsync(u => u.Username == username.ToLower(), cancellationToken);
 
 	public async Task<UserInfo?> GetByCodeAsync(string code, CancellationToken cancellationToken = default)
 	{
@@ -57,7 +57,7 @@ internal class UserRepository(
 	public async Task<UserInfo?> GetByUsernameAsync(string username, CancellationToken cancellationToken = default)
 	{
 		var user = await context.Users
-		.FirstOrDefaultAsync(u => u.Username == username, cancellationToken)
+		.FirstOrDefaultAsync(u => u.Username == username.ToLower(), cancellationToken)
 		.ConfigureAwait(false);
 
 		return user is null

@@ -2,7 +2,7 @@
 
 namespace GHLearning.EasyCQRS.WebApi.Models.Users;
 
-public record GetUserByCodeViewModel(
+public record GetUserByUsernameViewModel(
 	string Code,
 	string Username,
 	UserStatus Status,
