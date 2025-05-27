@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GHLearning.EasyCQRS.Application.Users.UpdateByPassword;
+﻿using GHLearning.EasyCQRS.Application.Users.UpdateByPassword;
 using GHLearning.EasyCQRS.Core.Users;
 using GHLearning.EasyCQRS.Core.Users.Models;
 using GHLearning.EasyCQRS.SharedKernel;
 using NSubstitute;
 
-namespace GHLearning.EasyCQRS.ApplicationTest.Users.UpdateByPassword;
+namespace GHLearning.EasyCQRS.ApplicationTests.Users.UpdateByPassword;
+
 public class UpdateUserByPasswordCommandHandlerTest
 {
 	[Fact]

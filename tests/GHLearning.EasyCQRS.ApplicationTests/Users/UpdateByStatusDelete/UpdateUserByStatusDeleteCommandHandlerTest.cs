@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GHLearning.EasyCQRS.Application.Users.UpdateByStatusDelete;
+﻿using GHLearning.EasyCQRS.Application.Users.UpdateByStatusDelete;
 using GHLearning.EasyCQRS.Core.Users;
 using GHLearning.EasyCQRS.Core.Users.Models;
 using NSubstitute;
 
-namespace GHLearning.EasyCQRS.ApplicationTest.Users.UpdateByStatusDelete;
+namespace GHLearning.EasyCQRS.ApplicationTests.Users.UpdateByStatusDelete;
+
 public class UpdateUserByStatusDeleteCommandHandlerTest
 {
 	[Fact]

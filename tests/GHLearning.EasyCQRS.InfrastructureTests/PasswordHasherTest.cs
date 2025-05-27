@@ -1,6 +1,6 @@
 ﻿using GHLearning.EasyCQRS.Infrastructure;
 
-namespace GHLearning.EasyCQRS.InfrastructureTest;
+namespace GHLearning.EasyCQRS.InfrastructureTests;
 
 public class PasswordHasherTest
 {
@@ -13,7 +13,6 @@ public class PasswordHasherTest
 
 		Assert.NotNull(hasedPassword);
 	}
-
 
 	[Fact]
 	public void VerifyPassword()

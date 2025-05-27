@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GHLearning.EasyCQRS.Core.Users;
-using GHLearning.EasyCQRS.Infrastructure;
+﻿using GHLearning.EasyCQRS.Infrastructure;
 using NSubstitute;
 
-namespace GHLearning.EasyCQRS.InfrastructureTest;
+namespace GHLearning.EasyCQRS.InfrastructureTests;
 public class UserCodeGeneratorTest
 {
 	[Fact]

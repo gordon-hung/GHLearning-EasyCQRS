@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GHLearning.EasyCQRS.Application.Abstractions.Messaging;
-using GHLearning.EasyCQRS.Application.Users.UpdateByPassword;
+﻿using GHLearning.EasyCQRS.Application.Abstractions.Messaging;
 using GHLearning.EasyCQRS.Core.Users;
 using GHLearning.EasyCQRS.Core.Users.Models;
-using GHLearning.EasyCQRS.SharedKernel;
 
 namespace GHLearning.EasyCQRS.Application.Users.UpdateByStatusDelete;
 internal class UpdateUserByStatusDeleteCommandHandler(

@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GHLearning.EasyCQRS.Application.Users.GetByUsername;
+﻿using GHLearning.EasyCQRS.Application.Users.GetByUsername;
 using GHLearning.EasyCQRS.Core.Users;
 using GHLearning.EasyCQRS.Core.Users.Models;
 using NSubstitute;
 
-namespace GHLearning.EasyCQRS.ApplicationTest.Users.GetByUsername;
+namespace GHLearning.EasyCQRS.ApplicationTests.Users.GetByUsername;
 public class GetUserByUsernameQueryHandlerTest
 {
 	[Fact]

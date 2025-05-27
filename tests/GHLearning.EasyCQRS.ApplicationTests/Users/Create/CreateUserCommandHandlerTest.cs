@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GHLearning.EasyCQRS.Application.Users.Create;
+﻿using GHLearning.EasyCQRS.Application.Users.Create;
 using GHLearning.EasyCQRS.Core.Users;
 using GHLearning.EasyCQRS.Core.Users.Models;
 using GHLearning.EasyCQRS.SharedKernel;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
 
-namespace GHLearning.EasyCQRS.ApplicationTest.Users.Create;
+namespace GHLearning.EasyCQRS.ApplicationTests.Users.Create;
 
 public class CreateUserCommandHandlerTest
 {

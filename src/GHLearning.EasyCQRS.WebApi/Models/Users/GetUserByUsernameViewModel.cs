@@ -1,5 +1,4 @@
 ﻿using GHLearning.EasyCQRS.Core.Users;
-using GHLearning.EasyCQRS.SharedKernel;
 
 namespace GHLearning.EasyCQRS.WebApi.Models.Users;
 

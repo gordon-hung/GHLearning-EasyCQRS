@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CorrelationId;
+﻿using CorrelationId;
 using GHLearning.EasyCQRS.Infrastructure;
 using Microsoft.AspNetCore.Http;
 
-namespace GHLearning.EasyCQRS.InfrastructureTest;
+namespace GHLearning.EasyCQRS.InfrastructureTests;
 public class CustomCorrelationIdProviderTest
 {
 	[Fact]

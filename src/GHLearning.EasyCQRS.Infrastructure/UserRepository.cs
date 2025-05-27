@@ -39,6 +39,7 @@ internal class UserRepository(
 		context.Users.Update(entity);
 		await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 	}
+
 	public Task<bool> ExistsAsync(string code, CancellationToken cancellationToken = default)
 		=> context.Users.AnyAsync(u => u.Code == code, cancellationToken);
 

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GHLearning.EasyCQRS.Core.Users;
+﻿using GHLearning.EasyCQRS.Core.Users;
 using GHLearning.EasyCQRS.Core.Users.Models;
 using GHLearning.EasyCQRS.Infrastructure;
 using GHLearning.EasyCQRS.Infrastructure.Entities;
@@ -11,7 +6,8 @@ using GHLearning.EasyCQRS.Infrastructure.Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace GHLearning.EasyCQRS.InfrastructureTest;
+namespace GHLearning.EasyCQRS.InfrastructureTests;
+
 public class UserRepositoryTest
 {
 	[Fact]
@@ -155,6 +151,25 @@ public class UserRepositoryTest
 	}
 
 	[Fact]
+	public async Task GetByCodeAsync_Is_Null()
+	{
+		var options = new DbContextOptionsBuilder<EasyDbContext>()
+			.UseInMemoryDatabase(databaseName: $"dbo.{nameof(GetByCodeAsync_Is_Null)}")
+			.ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning))
+			.Options;
+		var context = new EasyDbContext(options);
+		_ = context.Database.EnsureDeleted();
+		_ = context.Database.EnsureCreated();
+
+
+		var sut = new UserRepository(context);
+		using var tokenSource = new CancellationTokenSource();
+		var actual = await sut.GetByCodeAsync("code", tokenSource.Token);
+
+		Assert.Null(actual);
+	}
+
+	[Fact]
 	public async Task GetByUsernameAsync()
 	{
 		var options = new DbContextOptionsBuilder<EasyDbContext>()
@@ -191,6 +206,24 @@ public class UserRepositoryTest
 		Assert.NotNull(actual.UpdatedAt);
 		Assert.NotNull(actual.RegisteredAt);
 		Assert.Null(actual.DeletedAt);
+	}
+
+	[Fact]
+	public async Task GetByUsernameAsync_Is_Null()
+	{
+		var options = new DbContextOptionsBuilder<EasyDbContext>()
+			.UseInMemoryDatabase(databaseName: $"dbo.{nameof(GetByUsernameAsync_Is_Null)}")
+			.ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning))
+			.Options;
+		var context = new EasyDbContext(options);
+		_ = context.Database.EnsureDeleted();
+		_ = context.Database.EnsureCreated();
+
+		var sut = new UserRepository(context);
+		using var tokenSource = new CancellationTokenSource();
+		var actual = await sut.GetByUsernameAsync("username", tokenSource.Token);
+
+		Assert.Null(actual);
 	}
 
 	[Fact]
